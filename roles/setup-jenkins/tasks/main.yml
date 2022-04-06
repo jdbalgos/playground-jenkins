@@ -1,0 +1,44 @@
+---
+- name: copy jenkins repo to repos.d
+  copy:
+    src: files/jenkins.repo
+    dest: /etc/yum.repos.d
+- name: copy rpm_key
+  copy:
+    src: files/jenkins.io.key
+    dest: /root
+- name: import jenkins rpm_key
+  shell:
+    cmd: rpm --import /root/jenkins.io.key
+- name: install java jdk and jenkins
+  dnf:
+    name:
+      - java-11-openjdk
+      - jenkins
+      - git
+      - python3
+      - python3-pip
+    state: present
+- name: enable port 8080 firewalld
+  firewalld:
+    port: "8080/tcp"
+    state: enabled
+    immediate: true
+    permanent: true
+- name: start service
+  service:
+    name: jenkins
+    state: started
+    enabled: true
+- name: update pip3
+  pip:
+    name: pip
+    state: latest
+- name: install ansible via pip3
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - ansible
+    - proxmoxer
+    - requests
