@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Setup Jenkins') {
       steps {
-        sh 'ansible-playbook --vault-pass-file=.ansible_pass setup-jenkins.yml'
+        sh 'ansible-playbook --vault-pass-file=~/.ansible_pass setup-jenkins.yml'
       }
     }
   }
