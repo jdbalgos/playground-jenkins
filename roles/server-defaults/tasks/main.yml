@@ -34,4 +34,6 @@
     groups: "wheel"
     password: "{{ user_pass }}"
     shell: "/bin/bash"
-
+- name: change timezone
+  timezone:
+    name: Asia/Manila
