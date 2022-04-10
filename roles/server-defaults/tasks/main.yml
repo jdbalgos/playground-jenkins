@@ -37,3 +37,17 @@
 - name: change timezone
   timezone:
     name: Asia/Manila
+- name: create ssh directory for deve
+  file:
+    state: directory
+    path: /home/deve/.ssh
+    owner: deve
+    group: deve
+    mode: '0700'
+- name: create authorized_keys for deve
+  copy:
+    src: files/id_rsa_deve.pub
+    dest: /home/deve/.ssh/authorized_keys
+    owner: deve
+    group: deve
+
